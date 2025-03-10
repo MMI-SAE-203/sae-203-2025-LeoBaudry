@@ -1,0 +1,4 @@
+POCKETBASE : 
+
+email : leo.baudry@edu.univ-fcomte.fr
+Password : POCKETBASE123456
