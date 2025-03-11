@@ -72,3 +72,7 @@ export async function modifyAnyRecord(collection, id, data) {
     const record = await pb.collection(collection).update(id, data);
     return record;
 }
+
+
+// ----------------------------------------------------------------------------- //
+

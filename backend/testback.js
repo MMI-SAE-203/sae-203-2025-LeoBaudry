@@ -7,7 +7,10 @@ import {
     inviteById, 
     activitesByInviteId, 
     activitesByInviteNom, 
-    modifyAnyRecord 
+    modifyAnyRecord, 
+    findUserByEmail,
+    loginWithEmail,
+    testUsersCollection
     } 
     from "./backend.mjs";
 
@@ -120,3 +123,7 @@ import {
 // } catch (error) {
 //     console.error("Erreur lors de la modification de l'enregistrement : ", error);
 // }
+
+
+// ----------------------------------------------------------------------------- //
+
