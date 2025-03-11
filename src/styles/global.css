@@ -28,6 +28,7 @@
 @layer base {
     body {
       @apply font-mulish text-base leading-normal;
+      @apply bg-(--color-background)
     }
     h1 {
     @apply text-3xl font-poppins leading-tight lg:text-6xl font-bold;
