@@ -1,6 +1,36 @@
 ---
 import LayoutWithHero from '../layouts/LayoutWithHero.astro';
+import imgHero from '../assets/img/hero-homepage.webp';
 
+const title = "Festival « Ça va Trai'ler ! »";
+const subTitle = "Du 21 au 25 avril 2025";
+const subTitle2 = "Festival audiovisuel et sportif de Belfort.";
+const description = "Festival audiovisuel et sportif de Belfort.";
 ---
 
-<LayoutWithHero></LayoutWithHero>
+<LayoutWithHero title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Runner" classContent="">
+	<nav slot="chapo">
+    <ul>
+      <li>
+        <a href="#">
+          a
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          b
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          c
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="stroke-black" slot="patterns">
+  </div>
+  <Fragment slot="content">
+	  <p>Contenu principal de la page</p>
+  </Fragment>
+</LayoutWithHero>
