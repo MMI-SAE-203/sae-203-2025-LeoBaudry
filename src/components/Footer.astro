@@ -1,0 +1,65 @@
+---
+import LogoFooter from '../assets/icons/logo-white.svg';
+import IconFacebook from '../assets/icons/icon-facebook-white.svg';
+import IconInstagram from '../assets/icons/icon-instagram-white.svg';
+import IconTwitter from '../assets/icons/icon-twitter-white.svg';
+import IconYoutube from '../assets/icons/icon-youtube-white.svg';
+import IconTiktok from '../assets/icons/icon-tiktok-white.svg';
+---
+
+<footer class="grille space-y-6 text-sm bg-stone-900 py-16 px-6 text-white lg:space-y-0">
+  <a class="block lg:col-span-6 lg:col-start-1" href="/" aria-label="Accueil">
+    <div class="flex items-center gap-4">
+      <LogoFooter />
+      <h3 class="uppercase ml-4">Festival "Ça va Trai'ler !"</h3>
+    </div>
+  </a>
+
+  <nav class="space-y-4 lg:col-span-3 lg:col-start-7">
+    <h3 class="uppercase text-sm tracking-wide text-stone-400">Menu</h3>
+    <ul>
+      <li><a href="/agenda" class="uppercase text-grey1">Mentions légales</a></li>
+      <li><a href="/contact" class="uppercase text-grey1">Contact et accès</a></li>
+    </ul>
+  </nav>
+
+  <div class="space-y-2 lg:col-span-3 lg:col-start-10">
+    <h3 class="uppercase text-sm tracking-wide text-stone-400">Contact</h3>
+    <address class="not-italic text-grey4">
+      <br />90000 Belfort<br />
+      <a href="tel:0123456789">01 23 45 67 89</a><br />
+      <a href="mailto:contact@festival-trailer.fr">contact@festival-trailer.fr</a>
+    </address>
+  </div>
+
+  <div class="space-y-3 lg:col-span-6 lg:col-start-7">
+    <h3 class="uppercase text-sm tracking-wide text-stone-400">Nous suivre</h3>
+    <ul class="flex gap-4">
+      <li>
+        <a href="https://facebook.com" aria-label="facebook">
+          <IconFacebook class="fill-white w-6 h-6" />
+        </a>
+      </li>
+      <li>
+        <a href="https://instagram.com" aria-label="instagram">
+          <IconInstagram class="fill-white w-6 h-6" />
+        </a>
+      </li>
+      <li>
+        <a href="https://twitter.com" aria-label="twitter">
+          <IconTwitter class="fill-white w-6 h-6" />
+        </a>
+      </li>
+      <li>
+        <a href="https://youtube.com" aria-label="youtube">
+          <IconYoutube class="fill-white w-6 h-6" />
+        </a>
+      </li>
+      <li>
+        <a href="https://tiktok.com" aria-label="tiktok">
+          <IconTiktok class="fill-white w-6 h-6" />
+        </a>
+      </li>
+    </ul>
+  </div>
+</footer>

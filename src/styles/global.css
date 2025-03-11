@@ -1,19 +1,51 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Mulish", sans-serif;
-  --font-sans: "DM Sans", sans-serif;
-  --font-sans: "Poppins", sans-serif;
+  --font-mulish: "Mulish", sans-serif;
+  --font-dmsans: "DM Sans", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+
 
 
   --color-background: oklch(98.24% 0.0331 97.68); /* #FFFAE1 */
-  
+
   --color-red: oklch(71.51% 0.1785 27.97); /* #F6F61 */
   --color-orange: oklch(75.36% 0.163659 50.4009); /* #FF8C42 */
   --color-yellow: oklch(87.89% 0.180077 93.5768); /* #FFD300 */
   --color-blue: oklch(76.44% 0.112 228.76); /* #5BC0EB */
-  
 
+  --color-grey1: oklch(92.87% 0.0046 78.3); /* #E9E7E4 */
+  --color-grey2: oklch(88.53% 0 0); /* #D9D9D9 */
+  --color-grey3: oklch(84.05% 0.0053 67.75); /* #CDCAC7 */
+  --color-grey4: oklch(67.15% 0.0056 67.73); /* #989592 */
+
+
+
+  --my-grid: repeat(12, minmax(0, 64px));
 
 }
 
+@layer base {
+    body {
+      @apply font-mulish text-base leading-normal;
+    }
+    h1 {
+    @apply text-3xl font-poppins leading-tight lg:text-6xl font-bold;
+    }
+    h2 {
+      @apply text-2xl font-dmsans leading-tight lg:text-4xl font-semibold;
+    }
+    h3 {
+      @apply text-xl font-mulish font-medium leading-tight my-4;
+    }
+    ::selection {
+      @apply bg-(--color-red);
+    }
+  }
+
+
+@layer components {
+  .grille {
+    @apply px-6 lg:grid lg:grid-cols-(--my-grid) lg:justify-center lg:gap-12;
+  }
+}
