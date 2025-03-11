@@ -1,16 +1,64 @@
 ---
 import '../styles/global.css';
+import '@fontsource/mulish/400.css';
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/poppins/400.css';
+
+const { description, image = "/screenshot.jpg" } = Astro.props;
+
+const baseUrl = "https://www.example.com";
+const pageUrl = `${baseUrl}${Astro.url.pathname}`;
+const siteName = "Ça va Trai'ler !";
+
+const title = Astro.url.pathname === "/" ? siteName : `${Astro.props.title} — ${siteName}`;
 ---
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<!-- Encodage & viewport -->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	  	<!-- SEO Meta -->
+	 	 <title>{title}</title>
+	  	<meta name="description" content={description}>
+		<meta name="generator" content={Astro.generator}>
+	  	<meta name="robots" content="index, follow">
+  
+		<!-- Open Graph -->
+		<meta property="og:title" content={title}>
+		<meta property="og:description" content={description}>
+		<meta property="og:image" content={image}>
+		<meta property="og:url" content={pageUrl}>
+		<meta property="og:type" content="website">
+		<meta property="og:locale" content="fr_FR">
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image">
+		<meta name="twitter:title" content={title}>
+		<meta name="twitter:description" content={description}>
+		<meta name="twitter:image" content={image}>
+		<meta name="twitter:site" content="@yourtwitterhandle">
+
+		<!-- Preconnect -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href={pageUrl} crossorigin>
+		<link rel="dns-prefetch" href={pageUrl}>
+
+		<!-- Favicon et icônes -->
+		<link rel="icon" type="image/svg+xml" href="/src/assets/favicon/favicon.ico">
+		<link rel="apple-touch-icon" sizes="180x180" href="/src/assets/favicon/apple-touch-icon.png">
+		<link rel="manifest" href="/site.webmanifest">
+
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
-  </head>
-  <body>
-    <slot />
-  </body>
-</html>
+	
+	
+	
+	<body>
+		<main>
+		  <slot/>
+		</main>
+	  </body>
+  </html>
+
+	  

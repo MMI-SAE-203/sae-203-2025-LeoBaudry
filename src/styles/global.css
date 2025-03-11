@@ -1,27 +1,19 @@
 @import "tailwindcss";
 
 @theme {
-  --color-indigo: oklch(26.53% 0.1502 278.05); /* #1d096b */
-  --color-pink: oklch(82.94% 0.1209 30.54); /* #feaa9b */
+  --font-sans: "Mulish", sans-serif;
+  --font-sans: "DM Sans", sans-serif;
+  --font-sans: "Poppins", sans-serif;
 
-  --font-sans: "Mulish", "sans-serif";
-  --font-mono: "Space Mono", "monospace";
+
+  --color-background: oklch(98.24% 0.0331 97.68); /* #FFFAE1 */
+  
+  --color-red: oklch(71.51% 0.1785 27.97); /* #F6F61 */
+  --color-orange: oklch(75.36% 0.163659 50.4009); /* #FF8C42 */
+  --color-yellow: oklch(87.89% 0.180077 93.5768); /* #FFD300 */
+  --color-blue: oklch(76.44% 0.112 228.76); /* #5BC0EB */
+  
+
+
 }
 
-@layer base {
-  body {
-    @apply font-sans text-base leading-normal;
-  }
-  h1 {
-    @apply text-4xl font-mono leading-tight lg:text-6xl;
-  }
-  h2 {
-    @apply text-2xl font-mono leading-tight lg:text-4xl;
-  }
-  h3 {
-    @apply text-xl font-sans font-bold leading-tight my-4;
-  }
-  ::selection {
-    @apply bg-(--color-pink);
-  }
-}
