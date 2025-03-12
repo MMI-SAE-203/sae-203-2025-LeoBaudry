@@ -119,3 +119,36 @@ export const oneFilm = async (id) => {
 };
 
 // ----------------------------------------------------------------------------- //
+
+export const getInvites = async (collection = "invite") => {
+  try {
+    const invites = await pb.collection(collection).getFullList();
+    const updatedInvites = invites.map((invite) => ({
+      ...invite,
+      photoUrl: invite.photo_invite ? pb.files.getUrl(invite, invite.photo_invite) : null,
+    }));
+    return updatedInvites;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des invités :", error);
+    return [];
+  }
+};
+
+// ----------------------------------------------------------------------------- //
+
+export const oneInvite = async (id) => {
+  try {
+    const invite = await pb.collection("invite").getOne(id);
+    
+    // Récupération de l'URL de la photo
+    const photoUrl = invite.photo_invite ? pb.files.getUrl(invite, invite.photo_invite, { thumb: "1024x1024" }) : null;
+    
+    return {
+      ...invite,
+      photoUrl,
+    };
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'invité :", error);
+    return null;
+  }
+};

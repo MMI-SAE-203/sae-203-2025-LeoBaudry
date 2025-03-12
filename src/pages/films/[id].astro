@@ -4,6 +4,8 @@ import Layout from "../../layouts/Layout.astro";
 import IconFlagFr from '../../assets/icons/flag-fr.svg'; 
 import IconClock from '../../assets/icons/icon-clock.svg'; 
 import IconDirector from '../../assets/icons/icon-director.svg';
+import IconProjection from '../../assets/icons/icon-projection.svg';
+import IconProduction from '../../assets/icons/icon-production.svg';
 
 const { id } = Astro.params; 
 const film = await oneFilm(id);
@@ -79,7 +81,7 @@ const embedUrl = `https://www.youtube.com/embed/${film.bande_annonce_film.split(
                     <div>
                         <p class="text-gray-600 text-sm mb-1">Date de parution</p>
                         <div class="flex items-center gap-2">
-                            <IconClock class="w-6 h-6" />
+                            <IconProduction class="w-6 h-6" />
                             <span class="font-semibold">
                                 {new Date(film.date_parution_film).toLocaleDateString('fr-FR', {
                                     day: 'numeric',
@@ -94,7 +96,7 @@ const embedUrl = `https://www.youtube.com/embed/${film.bande_annonce_film.split(
                     <div>
                         <p class="text-gray-600 text-sm mb-1">Date de projection</p>
                         <div class="flex items-center gap-2">
-                            <IconClock class="w-6 h-6" />
+                            <IconProjection class="w-6 h-6" />
                             <span class="font-semibold">
                                 {new Date(film.date_projection_film).toLocaleDateString('fr-FR', {
                                     day: 'numeric',
@@ -150,12 +152,24 @@ const embedUrl = `https://www.youtube.com/embed/${film.bande_annonce_film.split(
                     </div>
                 )}
 
-        <!-- Invité associé -->
-        {film.invite_associe && (
-            <div class="my-8">
-                <h2 class="text-xl font-semibold mb-4">Invité Associé</h2>
-                <p class="text-gray-600">{film.invite_associe}</p>
+<!-- Invité associé -->
+{film.expand?.invite_associe && (
+    <div class="my-8">
+        <h2 class="text-xl font-semibold mb-4">Invité Associé</h2>
+        <a href={`/invites/${film.expand.invite_associe.id}`} class="flex items-center gap-4 p-4 bg-white rounded-lg border border-orange-100 hover:bg-orange-50 transition-colors">
+            {film.expand.invite_associe.photo_invite && (
+                <img 
+                    src={pb.files.getUrl(film.expand.invite_associe, film.expand.invite_associe.photo_invite)}
+                    alt={`Photo de ${film.expand.invite_associe.nom_invite} ${film.expand.invite_associe.prenom_invite}`}
+                    class="w-20 h-20 object-cover rounded-full"
+                />
+            )}
+            <div>
+                <p class="font-semibold text-lg">{film.expand.invite_associe.nom_invite} {film.expand.invite_associe.prenom_invite}</p>
+                <p class="text-gray-600">{film.expand.invite_associe.role_invite}</p>
             </div>
-        )}
+        </a>
+    </div>
+)}
     </main>
 </Layout>

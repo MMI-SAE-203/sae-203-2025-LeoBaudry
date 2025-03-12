@@ -3,7 +3,7 @@ import Logo from '../assets/icons/logo-black.svg';
 ---
 
 <header 
-  class="px-6 py-4 fixed z-10 w-full flex items-stretch justify-between transition-all duration-300 ease-in-out lg:py-0 bg-[--color-background]"
+  class="px-6 py-4 fixed z-10 w-full flex items-stretch justify-between transition-all duration-300 ease-in-out lg:py-0 bg-[--color-background] lg:backdrop-blur-md"
   id="header"
 >    
   <div class="flex items-center relative z-20">
@@ -35,7 +35,7 @@ import Logo from '../assets/icons/logo-black.svg';
     </button>
 
     <nav 
-      class="visible fixed z-10 inset-0 bg-(--color-blue) text-2xl text-black opacity-100 transition-all duration-300 ease-in-out max-lg:aria-hidden:invisible max-lg:aria-hidden:opacity-0 lg:relative lg:flex lg:items-center lg:bg-transparent lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-black lg:opacity-100"
+      class="visible fixed z-10 inset-0 text-2xl text-black opacity-100 transition-all duration-300 ease-in-out max-lg:aria-hidden:visible max-lg:aria-hidden:opacity-0 lg:relative lg:flex lg:items-center lg:bg-transparent lg:text-sm lg:font-bold lg:uppercase lg:tracking-wide lg:text-black lg:opacity-100 max-lg:backdrop-blur-md max-lg:bg-opacity-50"
       id="menu"
       aria-hidden="true"
     >
@@ -47,7 +47,7 @@ import Logo from '../assets/icons/logo-black.svg';
         <!-- Menu Programmation avec sous-menu modifié -->
         <li class="lg:before:bg-(--color-orange) group lg:hover:overflow-visible">
           <div class="relative">
-            <a class="block px-5 py-4 lg:py-8 flex items-center cursor-pointer" href="/programmation">
+            <a class="px-5 py-4 lg:py-8 flex items-center cursor-pointer" href="/programmation">
               Programmation
               <svg class="ml-2 w-4 h-4 hidden lg:block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -55,9 +55,9 @@ import Logo from '../assets/icons/logo-black.svg';
             </a>
             
             <!-- Sous-menu desktop amélioré -->
-            <div class="lg:absolute lg:left-0 lg:top-full lg:invisible lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-80 lg:bg-(--color-background) lg:shadow-md lg:rounded-md lg:p-2 lg:w-64 lg:z-30 lg:transition-all lg:duration-300 lg:border-2 lg:border-black">
+            <div class="lg:absolute lg:left-0 lg:top-full lg:invisible lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-80 lg:bg-[--color-background] lg:shadow-md lg:rounded-md lg:p-2 lg:w-64 lg:z-30 lg:transition-all lg:duration-300 lg:border-2 lg:border-black">
               <!-- Barre verticale orange pour mobile -->
-              <div class="lg:hidden w-1  absolute left-3 top-0 bottom-0"></div>
+              <div class="lg:hidden w-1 absolute left-3 top-0 bottom-0"></div>
               
               <ul class="lg:py-2">
                 <li class="lg:hover:bg-(--color-orange) lg:rounded">
@@ -96,9 +96,9 @@ import Logo from '../assets/icons/logo-black.svg';
     
     if (toggle && nav) {
       toggle.addEventListener("click", () => {
-        const isOpen = toggle.ariaExpanded === "true";
-        toggle.ariaExpanded = String(!isOpen);
-        nav.ariaHidden = String(isOpen);
+        const isOpen = toggle.getAttribute("aria-expanded") === "true";
+        toggle.setAttribute("aria-expanded", String(!isOpen));
+        nav.setAttribute("aria-hidden", String(isOpen));
         page.classList.toggle("noscroll", !isOpen);
       });
     }
@@ -112,7 +112,6 @@ import Logo from '../assets/icons/logo-black.svg';
     function handleScroll() {
       const currentScrollY = window.scrollY;
 
-      // Suppression de la gestion du background pour le garder opaque
       if (currentScrollY > lastScrollY && currentScrollY > offset) {
         navBar.classList.add("-translate-y-full");
       } else {
@@ -132,14 +131,18 @@ import Logo from '../assets/icons/logo-black.svg';
 
     // Gestion du sous-menu mobile uniquement
     document.addEventListener('DOMContentLoaded', () => {
-      const progMenuItem = document.querySelector('.group > div > div'); // Modifié pour cibler le bon élément
+      const menuLinks = document.querySelectorAll('.group > div > a');
       
-      if (progMenuItem && window.innerWidth < 1024) {
-        progMenuItem.addEventListener('click', (e) => {
-          const submenu = e.currentTarget.nextElementSibling;
-          if (submenu) {
-            e.preventDefault();
-            submenu.classList.toggle('hidden');
+      if (window.innerWidth < 1024) {
+        menuLinks.forEach(link => {
+          if (link.nextElementSibling) {
+            link.addEventListener('click', (e) => {
+              if (window.innerWidth < 1024) {
+                e.preventDefault();
+                const submenu = link.nextElementSibling;
+                submenu.classList.toggle('hidden');
+              }
+            });
           }
         });
       }
