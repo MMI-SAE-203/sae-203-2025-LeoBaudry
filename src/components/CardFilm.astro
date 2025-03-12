@@ -1,5 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
+import IconFlagFr from '../assets/icons/flag-fr.svg';
+import IconClock from '../assets/icons/icon-clock.svg';
 const { ...film } = Astro.props;
 ---
 
@@ -37,17 +39,25 @@ const { ...film } = Astro.props;
 
       </p>
 
-      <p class="text-gray-600 text-sm mb-2">
-        <span>
-          {film.duree_film}
-        </span>
-      </p>
-
       <h3 class="font-bold text-xl mb-2">
         <a href={`/films/${film.id}`} class="text-gray-900 hover:text-gray-700">
           {film.titre_film}
         </a>
       </h3>
+
+      <hr class="border-t border-gray-200 my-2" />
+
+      <p class="text-gray-600 text-md mb-2 flex flex-wrap gap-4">
+        <span class="flex items-center">
+          <IconClock class="w-6 h-6 mr-1"/>
+          {film.duree_film}
+        </span>
+        <span class="flex items-center">
+          <IconFlagFr class="w-6 h-6 mr-1"/>
+          {film.langue_film} 
+        </span>
+      </p>
+
 
     </div>
 
