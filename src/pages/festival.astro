@@ -1,0 +1,17 @@
+---
+import LayoutWithHero from '../layouts/LayoutWithHero.astro';
+
+import imgHero from '../assets/img/festival-01.webp';
+import { Picture } from 'astro:assets';
+
+const title = "Le festival";
+const subTitle = "Du 21 au 25 avril 2025";
+const subTitle2 = "Tout ce qu'il faut savoir.";
+const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousiastes et cinéphiles, afin de partager ensemble leur amour du septième art et de la course à pied.";
+---
+
+<LayoutWithHero title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Le Festival" classContent="">	
+	<Fragment slot="content">
+		<p>Contenu principal de la page</p>
+	</Fragment>
+</LayoutWithHero>
