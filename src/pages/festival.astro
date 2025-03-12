@@ -3,6 +3,7 @@ import LayoutWithHero from '../layouts/LayoutWithHero.astro';
 
 import imgHero from '../assets/img/festival-01.webp';
 import { Picture } from 'astro:assets';
+import Carousel from '../components/Carousel.astro';
 
 const title = "Le festival";
 const subTitle = "Du 21 au 25 avril 2025";
@@ -12,6 +13,27 @@ const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousi
 
 <LayoutWithHero title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Le Festival" classContent="">	
 	<Fragment slot="content">
-		<p>Contenu principal de la page</p>
+		<h2>Nos origines</h2>
+        <p>Créé par une équipe de passionnés de sport et de cinéma, “Ça va trai'ler” est né de l’envie de connecter deux mondes, qui stimulent la créativité et l'énergie. </p>
+        <p>L'idée est de combiner l'exploration visuelle des courts-métrages avec l'effort physique, tout en offrant aux  participants une expérience riche en émotions, et en découvertes.</p>
+        <h2>Objectifs</h2>
+        <ul>
+            <li>Valoriser l’inclusivité et l’accessibilité</li>
+            <li>Permettre la rencontre entre deux mondes opposés</li>
+            <li>Promouvoir le dépassement de soi</li>
+            <li>Encourager les activités en famille</li>
+        </ul>
+        <Carousel />
+        <h2>L'équipe</h2>
+        <p>Notre équipe est composée de réalisateurs, athlètes et organisateurs événementiels passionnés. </p>
+        <p>Ensemble, nous partageons la vision d'un festival qui unit culture et performance physique, et qui repousse les limites de l’expérience audiovisuelle en plein air.</p>
+        
+        <h2>Pourquoi participer ?</h2>
+        <p>Participer à “Ça va trai'ler” c’est vivre une expérience nouvelle et unique.</p>
+        <p>C’est l'occasion de voir des courts-métrages inspirants tout en s'engageant activement dans des activités physiques accessibles à tous.</p>
+        <p>Que vous soyez amateur de trail, de cinéma ou simplement à la recherche d’une aventure différente, ce festival est fait pour vous.</p>
+        <p>C’est aussi une excellente façon de booster le milieu événementiel local, autour de chez vous !</p>
+
+
 	</Fragment>
 </LayoutWithHero>

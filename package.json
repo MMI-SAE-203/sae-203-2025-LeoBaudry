@@ -9,10 +9,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/alpinejs": "^0.4.3",
     "@fontsource/dm-sans": "^5.2.5",
     "@fontsource/mulish": "^5.2.5",
     "@fontsource/poppins": "^5.2.5",
     "@tailwindcss/vite": "^4.0.12",
+    "@types/alpinejs": "^3.13.11",
+    "alpinejs": "^3.14.8",
     "astro": "^5.4.2",
     "pocketbase": "^0.25.2",
     "tailwindcss": "^4.0.12"
