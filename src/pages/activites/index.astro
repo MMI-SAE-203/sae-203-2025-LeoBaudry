@@ -1,0 +1,106 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/CardActivite.astro';
+import { getActivites } from '../../../backend/backend.mjs';
+
+// Récupération de toutes les activités
+const activites = await getActivites();
+
+const uniqueCategories = [...new Set(activites.map(activite => activite.categorie_activite))];
+const categorieFilters = ['Toutes les activités', ...uniqueCategories];
+
+const { searchParams } = Astro.url;
+const activeCategorie = searchParams.get('categorie') || 'Toutes les activités';
+
+const filteredActivites = activeCategorie === 'Toutes les activités'
+  ? activites
+  : activites.filter(activite => activite.categorie_activite === activeCategorie);
+
+const countByCategorie = {
+  'Toutes les activités': activites.length
+};
+
+uniqueCategories.forEach(category => {
+  countByCategorie[category] = activites.filter(activite => activite.categorie_activite === category).length;
+});
+---
+
+<Layout>
+  <div class="min-h-screen py-30">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl lg:text-6xl font-bold text-center mb-8">Programmation des activités</h1>
+      
+      <!-- Filtres de catégorie -->
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        {categorieFilters.map((categorie) => (
+          <a 
+            href={`?categorie=${encodeURIComponent(categorie)}`}
+            class={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 filter-button ${
+              activeCategorie === categorie 
+                ? 'bg-(--color-orange) text-white' 
+                : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+            }`}
+            data-categorie={categorie}
+          >
+            {categorie} ({countByCategorie[categorie] || 0})
+          </a>
+        ))}
+      </div>
+
+      <!-- Résultat de recherche -->
+      <p class="text-center text-gray-600 mb-8">
+        {activeCategorie === 'Toutes les activités' 
+          ? `Affichage de toutes les activités (${filteredActivites.length})` 
+          : `Affichage des activités de catégorie "${activeCategorie}" (${filteredActivites.length})`}
+      </p>
+
+      <!-- Grille des cartes d'activités -->
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 sm:gap-16">
+        {filteredActivites.length > 0 ? (
+          filteredActivites.map((activite) => ( 
+            <Card {...activite} class="w-full mx-auto max-w-xs md:max-w-none h-full flex flex-col justify-end" />
+          ))
+        ) : (
+          <p class="text-center text-gray-500 col-span-full">Aucune activité ne correspond à cette catégorie.</p>
+        )}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cette fonction s'exécute côté client pour assurer que les filtres fonctionnent correctement
+    document.addEventListener('DOMContentLoaded', () => {
+      // S'assurer que le script s'exécute après le chargement complet du DOM
+      console.log("Script de filtrage d'activités initialisé");
+      
+      // Obtenir l'URL courante et le paramètre de catégorie actif
+      const currentUrl = new URL(window.location.href);
+      const currentCategorie = currentUrl.searchParams.get('categorie') || 'Toutes les activités';
+      
+      console.log("Catégorie active:", currentCategorie);
+      
+      // Sélectionner tous les boutons de filtre
+      const filterButtons = document.querySelectorAll('.filter-button');
+      
+      // Ajouter un gestionnaire d'événements à chaque bouton
+      filterButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          const categorie = button.getAttribute('data-categorie');
+          console.log("Filtre de catégorie cliqué:", categorie);
+          
+          // Construire une nouvelle URL avec le paramètre de catégorie
+          const newUrl = new URL(window.location.href);
+          if (categorie === 'Toutes les activités') {
+            newUrl.searchParams.delete('categorie');
+          } else {
+            newUrl.searchParams.set('categorie', categorie);
+          }
+          
+          // Naviguer vers la nouvelle URL
+          window.location.href = newUrl.toString();
+        });
+      });
+    });
+  </script>
+</Layout>

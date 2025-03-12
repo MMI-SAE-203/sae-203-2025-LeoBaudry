@@ -1,34 +1,20 @@
 ---
 import { Picture } from 'astro:assets';
-import IconFlagFr from '../assets/icons/flag-fr.svg';
+import IconHouse from '../assets/icons/icon-house.svg';
 import IconClock from '../assets/icons/icon-clock.svg';
-const { ...film } = Astro.props;
+const { ...activite } = Astro.props;
 ---
 
 <div class="w-72 md:w-84 lg:w-72 xl:w-72 2xl:w-84 rounded-lg overflow-hidden shadow-sm bg-white mx-auto">
   <article>
 
-    <a href={`/films/${film.id}`}>
-      {film.imageUrl ? (
-        <Picture
-          class="w-full h-auto object-cover rounded-t-lg"
-          width={500}
-          height={700}
-          src={film.imageUrl}
-          alt={`${film.film_name} - Affiche`}
-        />
-      ) : (
-        <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 rounded-t-lg">
-          No image available
-        </div>
-      )}
-    </a>
+
 
     <div class="px-6 py-4">
 
       <p class="text-gray-600 text-sm mb-2">
         <span>
-            {new Date(film.date_projection_film).toLocaleDateString('fr-FR', {
+            {new Date(activite.date_activite).toLocaleDateString('fr-FR', {
             day: 'numeric',
             month: 'long', 
             year: 'numeric',
@@ -40,12 +26,12 @@ const { ...film } = Astro.props;
         
         <div class="flex items-center mb-2">
           <h3 class="font-bold text-xl mr-2">
-            <a href={`/films/${film.id}`} class="text-gray-900 hover:text-gray-700">
-              {film.titre_film}
+            <a href={`/activites/${activite.id}`} class="text-gray-900 hover:text-gray-700">
+              {activite.titre_activite}
             </a>
           </h3>
           <p class="text-sm font-medium text-white bg-(--color-orange) px-2 py-1 rounded">
-            {film.categorie_film}
+            {activite.categorie_activite}
           </p>
         </div>
 
@@ -54,11 +40,11 @@ const { ...film } = Astro.props;
       <p class="text-gray-600 text-md mb-2 flex flex-wrap gap-4">
         <span class="flex items-center">
           <IconClock class="w-6 h-6 mr-1"/>
-          {film.duree_film}
+          {activite.duree_activite || "Non spécifié"}
         </span>
         <span class="flex items-center">
-          <IconFlagFr class="w-6 h-6 mr-1"/>
-          {film.langue_film} 
+          <IconHouse class="w-6 h-6 mr-1"/>
+          {activite.lieu_activite || "Non spécifié"} 
         </span>
       </p>
 
@@ -68,4 +54,3 @@ const { ...film } = Astro.props;
   </article>
 
 </div>
-

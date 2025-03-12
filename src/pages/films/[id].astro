@@ -6,6 +6,7 @@ import IconClock from '../../assets/icons/icon-clock.svg';
 import IconDirector from '../../assets/icons/icon-director.svg';
 import IconProjection from '../../assets/icons/icon-projection.svg';
 import IconProduction from '../../assets/icons/icon-production.svg';
+import IconCategory from '../../assets/icons/icon-category.svg';
 
 const { id } = Astro.params; 
 const film = await oneFilm(id);
@@ -77,6 +78,15 @@ const embedUrl = `https://www.youtube.com/embed/${film.bande_annonce_film.split(
                         </div>
                     </div>
 
+                    <!-- Catégorie -->
+                    <div>
+                        <p class="text-gray-600 text-sm mb-2">Catégorie</p>
+                        <div class="flex items-center gap-2">
+                            <IconCategory class="w-6 h-6" />
+                            <span class="font-semibold">{film.categorie_film}</span>
+                        </div>
+                    </div>
+                    
                     <!-- Date de parution -->
                     <div>
                         <p class="text-gray-600 text-sm mb-1">Date de parution</p>

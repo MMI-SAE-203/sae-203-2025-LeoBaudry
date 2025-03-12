@@ -1,11 +1,43 @@
 ---
 import { Picture } from 'astro:assets';
+import IconClock from '../assets/icons/icon-clock.svg';
+import IconHouse from '../assets/icons/icon-house.svg';
 const { ...invite } = Astro.props;
+
+// Objet associant les rôles à des couleurs
+const roleColors = {
+  'Acteur': 'bg-red-100 text-red-800',  
+  'Réalisateur': 'bg-orange-100 text-orange-800',  
+  'Animateur': 'bg-blue-100 text-blue-800',    
+};
+
+// Fonction pour formater la biographie avec un HTML propre
+const formatBiographie = (bio) => {
+  if (!bio) return '';
+  
+  const replacements = {
+    '&eacute;': 'é',
+    '&egrave;': 'è',
+  };
+  
+  let formattedBio = bio;
+  
+  Object.entries(replacements).forEach(([entity, char]) => {
+    formattedBio = formattedBio.split(entity).join(char);
+  });
+  
+  if (formattedBio.length > 140) {
+    const lastSpace = formattedBio.substring(0, 140).lastIndexOf(' ');
+    const cutoffPoint = lastSpace > 0 ? lastSpace : 140;
+    formattedBio = formattedBio.substring(0, cutoffPoint) + '...';
+  }
+  
+  return formattedBio;
+};
 ---
 
 <div class="w-72 md:w-84 lg:w-72 xl:w-72 2xl:w-84 rounded-lg overflow-hidden shadow-sm bg-white mx-auto">
   <article>
-
     <a href={`/invites/${invite.id}`}>
       {invite.photoUrl ? (
         <Picture
@@ -30,34 +62,33 @@ const { ...invite } = Astro.props;
       </h3>
 
       <p class="text-gray-700 text-sm mb-3">
-        <span class="inline-block bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-sm font-semibold mr-2">
+        <span class={`inline-block ${roleColors[invite.role_invite] || 'bg-gray-100 text-gray-800'} rounded-full px-3 py-1 text-sm font-semibold mr-2`}>
           {invite.role_invite}
         </span>
       </p>
 
       <hr class="border-t border-gray-200 my-2" />
 
-      <p class="text-gray-600 text-sm mb-2">
+    <p class="text-gray-600 text-sm mb-2">
+      <span class="flex items-center">
+        <IconHouse class="w-5 h-5 mr-1" />
+        <span>Né à {invite.ville_invite}</span>
+      </span>
+      {invite.date_naissance_invite && (
+        <span class="flex items-center mt-1">
+        <IconClock class="w-5 h-5 mr-1" />
         <span>
-          Né à {invite.ville_invite}
-          {invite.date_naissance_invite && (
-            <span>
-              le {new Date(invite.date_naissance_invite).toLocaleDateString('fr-FR', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric'
-              })}
-            </span>
-          )}
+          le {new Date(invite.date_naissance_invite).toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          })}
         </span>
-      </p>
+        </span>
+      )}
+    </p>
 
-      <p class="text-gray-700 text-sm line-clamp-3">
-        {invite.biographie_invite && invite.biographie_invite.length > 150 
-          ? invite.biographie_invite.substring(0, 150) + '...' 
-          : invite.biographie_invite}
-      </p>
+      <p class="text-gray-700 text-sm line-clamp-3" set:html={formatBiographie(invite.biographie_invite)}></p>
     </div>
-
   </article>
 </div>

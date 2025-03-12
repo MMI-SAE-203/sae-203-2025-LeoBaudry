@@ -86,8 +86,7 @@ export const getFilms = async (collection = "film") => {
     const films = await pb.collection(collection).getFullList();
     const updatedFilms = films.map((film) => ({
       ...film,
-      imageUrl: film.affiche_film ? pb.files.getUrl(film, film.affiche_film) : null, // Utilisation de 'affiche_film'
-    }));
+      imageUrl: film.affiche_film ? pb.files.getURL(film, film.affiche_film) : null,    }));
     return updatedFilms;
   } catch (error) {
     console.error("Erreur lors de la récupération des films :", error);
@@ -103,9 +102,8 @@ export const oneFilm = async (id) => {
     const film = await pb.collection("film").getOne(id);
     
     // Assurez-vous de récupérer l'URL correcte pour l'affiche
-    const imageUrl = pb.files.getUrl(film, film.affiche_film, { thumb: "1024x1024" });
-    
-    const imageUrls = film.film_img ? film.film_img.map(img => pb.files.getUrl(film, img)) : [];
+    const imageUrl = pb.files.getURL(film, film.affiche_film, { thumb: "1024x1024" });
+    const imageUrls = film.film_img ? film.film_img.map(img => pb.files.getURL(film, img)) : [];
     
     return {
       ...film,
@@ -119,13 +117,17 @@ export const oneFilm = async (id) => {
 };
 
 // ----------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------- //
 
-export const getInvites = async (collection = "invite") => {
+
+export const getInvites = async (collection = "Invites") => {
   try {
     const invites = await pb.collection(collection).getFullList();
     const updatedInvites = invites.map((invite) => ({
       ...invite,
-      photoUrl: invite.photo_invite ? pb.files.getUrl(invite, invite.photo_invite) : null,
+      photoUrl: invite.photo_invite ? pb.files.getURL(invite, invite.photo_invite) : null,
+
     }));
     return updatedInvites;
   } catch (error) {
@@ -136,19 +138,121 @@ export const getInvites = async (collection = "invite") => {
 
 // ----------------------------------------------------------------------------- //
 
-export const oneInvite = async (id) => {
-  try {
-    const invite = await pb.collection("invite").getOne(id);
-    
-    // Récupération de l'URL de la photo
-    const photoUrl = invite.photo_invite ? pb.files.getUrl(invite, invite.photo_invite, { thumb: "1024x1024" }) : null;
-    
-    return {
-      ...invite,
-      photoUrl,
-    };
-  } catch (error) {
-    console.error("Erreur lors de la récupération de l'invité :", error);
-    return null;
-  }
-};
+  export const oneInvite = async (id) => {
+    try {
+      const invite = await pb.collection("Invites").getOne(id);
+      
+      // Récupération de l'URL de la photo
+      const photoUrl = invite.photo_invite ? pb.files.getURL(invite, invite.photo_invite, { thumb: "1024x1024" }) : null;
+      
+      return {
+        ...invite,
+        photoUrl,
+      };
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'invité :", error);
+      return null;
+    }
+  };
+
+  // ----------------------------------------------------------------------------- //
+
+
+  export const getInviteContenuAssocie = async (inviteId) => {
+    try {
+      console.log(`Fetching content for invite ID: ${inviteId}`);
+      
+      // Récupérer les films associés
+      const filterFilm = `invite_associe = "${inviteId}"`;
+      console.log(`Film filter: ${filterFilm}`);
+      
+      const filmsAssocies = await pb.collection("Film").getList(1, 50, {
+        filter: filterFilm,
+      });
+      
+      console.log(`Found ${filmsAssocies.items.length} associated films`);
+      
+      // Formater les films avec leurs URLs d'images
+      const films = filmsAssocies.items.map(film => ({
+        id: film.id,
+        titre: film.titre_film,
+        date: film.date_projection_film,
+        imageUrl: film.affiche_film ? pb.files.getURL(film, film.affiche_film) : null,
+        type: "film"
+      }));
+      
+      // Récupérer les activités associées
+      const filterActivite = `invite_associe = "${inviteId}"`;
+      console.log(`Activite filter: ${filterActivite}`);
+      
+      const activitesAssociees = await pb.collection("Activite").getList(1, 50, {
+        filter: filterActivite,
+      });
+      
+      console.log(`Found ${activitesAssociees.items.length} associated activities`);
+      
+      // Formater les activités avec leurs URLs d'images
+      const activites = activitesAssociees.items.map(activite => ({
+        id: activite.id,
+        titre: activite.titre_activite,
+        date: activite.date_activite,
+        imageUrl: activite.image_activite ? pb.files.getURL(activite, activite.image_activite) : null,
+        type: "activite"
+      }));
+      
+      const result = [...films, ...activites];
+      console.log(`Total associated content: ${result.length}`);
+      return result;
+      
+    } catch (error) {
+      console.error("Erreur lors de la récupération des contenus associés :", error);
+      // Log more detailed error information
+      if (error.response) {
+        console.error("Error response data:", error.response);
+      }
+      if (error.originalError) {
+        console.error("Original error:", error.originalError);
+      }
+      return [];
+    }
+  };
+
+  // ----------------------------------------------------------------------------- //
+  // ----------------------------------------------------------------------------- //
+  // ----------------------------------------------------------------------------- //
+
+
+  export const getActivites = async (collection = "Activite") => {
+    try {
+      const activites = await pb.collection(collection).getFullList();
+      const updatedActivites = activites.map((activite) => ({
+        ...activite,
+        imageUrl: activite.image_activite ? pb.files.getURL(activite, activite.image_activite) : null,
+      }));
+      return updatedActivites;
+    } catch (error) {
+      console.error("Erreur lors de la récupération des activités :", error);
+      return [];
+    }
+  };
+  
+  // ----------------------------------------------------------------------------- //
+  
+  export const oneActivite = async (id) => {
+    try {
+      const activite = await pb.collection("Activite").getOne(id);
+      
+      // Assurez-vous de récupérer l'URL correcte pour l'image principale
+      const imageUrl = pb.files.getURL(activite, activite.image_activite, { thumb: "1024x1024" });
+      const imageUrls = activite.activite_img ? activite.activite_img.map(img => pb.files.getURL(activite, img)) : [];
+      
+      return {
+        ...activite,
+        imageUrls,  
+        imageUrl,  // Utilisez l'URL de l'image principale ici
+      };
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'activité :", error);
+      return null;
+    }
+  };
