@@ -1,36 +1,33 @@
 ---
 import LayoutWithHero from '../layouts/LayoutWithHero.astro';
+import LogoTwitter from '../assets/icons/icon-twitter-white.svg';
+
 import imgHero from '../assets/img/hero-homepage.webp';
 
 const title = "Festival « Ça va Trai'ler ! »";
 const subTitle = "Du 21 au 25 avril 2025";
 const subTitle2 = "Festival audiovisuel et sportif de Belfort.";
-const description = "Festival audiovisuel et sportif de Belfort.";
+const description = "Le festival « Ça va Trai'ler ! » est un événement audiovisuel et sportif qui se déroule à Belfort. Il propose des projections de films ainsi qu'une multitude d'activités sportives adaptées à tous les niveaux.";
 ---
 
 <LayoutWithHero title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Runner" classContent="">
-	<nav slot="chapo">
-    <ul>
-      <li>
-        <a href="#">
-          a
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          b
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          c
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <div class="stroke-black" slot="patterns">
-  </div>
-  <Fragment slot="content">
-	  <p>Contenu principal de la page</p>
-  </Fragment>
-</LayoutWithHero>
+	<ul class="grid grid-cols-3 gap-12">
+		<li>
+		  <a class="flex flex-col items-center gap-4" href="#">
+			<LogoTwitter/>
+		  </a>
+		</li>
+		<li>
+		  <a class="flex flex-col items-center gap-4" href="#">
+		  </a>
+		</li>
+		<li>
+		  <a class="flex flex-col items-center gap-4" href="#">
+		  </a>
+		</li>
+	  </ul>
+	</nav>
+	<Fragment slot="content">
+		<p>Contenu principal de la page</p>
+	</Fragment>
+  </LayoutWithHero>
