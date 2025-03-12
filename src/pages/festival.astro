@@ -2,7 +2,9 @@
 import LayoutWithHero from '../layouts/LayoutWithHero.astro';
 
 import imgHero from '../assets/img/festival-01.webp';
+import imgArbre from '../assets/img/arbre_main.webp'
 import { Picture } from 'astro:assets';
+
 import Carousel from '../components/Carousel.astro';
 
 const title = "Le festival";
@@ -34,6 +36,17 @@ const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousi
         <p>Que vous soyez amateur de trail, de cinéma ou simplement à la recherche d’une aventure différente, ce festival est fait pour vous.</p>
         <p>C’est aussi une excellente façon de booster le milieu événementiel local, autour de chez vous !</p>
 
+        <h2>Engagements écologiques et sociaux</h2>
+        <p>Nous avons à cœur d’organiser un festival écoresponsable.</p>
+        <p>Nous utilisons des matériaux recyclés, privilégions les circuits courts pour la restauration et encourageons l’usage de transports en commun. </p>
+        <p>En outre, toutes les activités et projections sont accessibles aux personnes à mobilité réduite.</p>
 
+        <div class="relative pt-50 sm:pt-100 lg:pt-100">
+            <Picture 
+              src={imgArbre} 
+              alt="Pousse dans une main" 
+              class="absolute right-0 top-0 w-auto sm:max-w-full object-contain sm:mx-auto lg:w-[600px] xl:w-[800px] max-h-screen"
+            />
+          </div>
 	</Fragment>
 </LayoutWithHero>

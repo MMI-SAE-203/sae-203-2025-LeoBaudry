@@ -13,4 +13,5 @@ export default defineConfig({
 
   experimental: { svg: true },
   integrations: [alpinejs()],
+  output: "server",
 });

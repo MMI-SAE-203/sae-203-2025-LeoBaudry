@@ -75,4 +75,47 @@ export async function modifyAnyRecord(collection, id, data) {
 
 
 // ----------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------- //
+// ----------------------------------------------------------------------------- //
 
+
+export const getFilms = async (collection = "film") => {
+  try {
+    const films = await pb.collection(collection).getFullList();
+    const updatedFilms = films.map((film) => ({
+      ...film,
+      imageUrl: film.affiche_film ? pb.files.getUrl(film, film.affiche_film) : null, // Utilisation de 'affiche_film'
+    }));
+    return updatedFilms;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des films :", error);
+    return [];
+  }
+};
+
+
+// ----------------------------------------------------------------------------- //
+
+export const oneFilm = async (id) => {
+  try {
+    const film = await pb.collection("film").getOne(id);
+    
+    // Assurez-vous de récupérer l'URL correcte pour l'affiche
+    const imageUrl = pb.files.getUrl(film, film.affiche_film, { thumb: "1024x1024" });
+    
+    const imageUrls = film.film_img ? film.film_img.map(img => pb.files.getUrl(film, img)) : [];
+    
+    return {
+      ...film,
+      imageUrls,  
+      imageUrl,  // Utilisez l'URL de l'affiche ici
+    };
+  } catch (error) {
+    console.error("Erreur lors de la récupération du film :", error);
+    return null;
+  }
+};
+
+// ----------------------------------------------------------------------------- //

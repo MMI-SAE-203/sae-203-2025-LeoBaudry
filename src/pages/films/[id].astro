@@ -1,0 +1,60 @@
+---
+import { oneFilm, getFilms } from '../../../backend/backend.mjs';
+import Layout from "../../layouts/Layout.astro";
+
+const { id } = Astro.params;
+const film = await oneFilm(id);
+
+if (!film) {
+    console.error(`Film with id ${id} not found`);
+    return Astro.redirect("/films");
+}
+---
+
+<Layout>
+    <main class="max-w-7xl mx-auto px-4 py-35">
+        <!-- Navigation et Actions -->
+        <div class="flex justify-between items-center mb-6 py-2">
+            <a href="/films" class="text-gray-600 flex items-center gap-2">
+                <span class="text-(--color-red) font-semibold text-sm">←</span> 
+                <span class="text-(--color-red) font-semibold">Back to list</span>
+            </a>
+        </div>
+
+        <!-- Titre -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-semibold mb-1">{film.titre_film}</h1>
+        </div>
+
+        <!-- Container principal pour l'image et les informations -->
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Image principale -->
+            <div class="mb-8 md:mb-0 max-w-md">
+            <img
+            src={film.imageUrl}
+            alt={`${film.titre_film} - Poster`}
+            class="w-full object-contain rounded-lg"
+            />
+            </div>
+
+            <!-- Caractéristiques et Description -->
+            <div class="flex-1">
+            <!-- Caractéristiques principales -->
+            <div class="grid grid-cols-5 gap-4 p-6 bg-white rounded-lg border border-indigo-100 mb-8">
+                <div>
+                <p class="text-gray-600 text-sm mb-1">Duration</p>
+                <div class="flex items-center gap-2">
+                    <span class="font-semibold">{film.duree_film}</span>
+                </div>
+                </div>
+            </div>
+
+                <!-- Description -->
+                <div>
+                    <h2 class="text-xl font-semibold mb-4">About this movie</h2>
+                    <div class="text-gray-600 space-y-4" set:html={film.synopsis_film} />
+                </div>
+            </div>
+        </div>
+    </main>
+</Layout>

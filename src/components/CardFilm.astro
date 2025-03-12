@@ -1,0 +1,57 @@
+---
+import { Picture } from 'astro:assets';
+const { ...film } = Astro.props;
+---
+
+<div class="w-72 md:w-84 lg:w-72 xl:w-72 2xl:w-84 rounded-lg overflow-hidden shadow-sm bg-white mx-auto">
+  <article>
+
+    <a href={`/films/${film.id}`}>
+      {film.imageUrl ? (
+        <Picture
+          class="w-full h-auto object-cover rounded-t-lg"
+          width={500}
+          height={700}
+          src={film.imageUrl}
+          alt={`${film.film_name} - Affiche`}
+        />
+      ) : (
+        <div class="h-64 bg-gray-200 flex items-center justify-center text-gray-500 rounded-t-lg">
+          No image available
+        </div>
+      )}
+    </a>
+
+    <div class="px-6 py-4">
+
+      <p class="text-gray-600 text-sm mb-2">
+        <span>
+            {new Date(film.date_projection_film).toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long', 
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })}
+        </span>
+
+      </p>
+
+      <p class="text-gray-600 text-sm mb-2">
+        <span>
+          {film.duree_film}
+        </span>
+      </p>
+
+      <h3 class="font-bold text-xl mb-2">
+        <a href={`/films/${film.id}`} class="text-gray-900 hover:text-gray-700">
+          {film.titre_film}
+        </a>
+      </h3>
+
+    </div>
+
+  </article>
+
+</div>
+
