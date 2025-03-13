@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Card from '../../components/CardFilm.astro';
+import CardFilm from '../../components/CardFilm.astro';
 import { getFilms } from '../../../backend/backend.mjs';
 
 // Récupération de tous les films
@@ -61,7 +61,7 @@ const description = "Découvrez les films projetés lors de la prochaine éditio
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 sm:gap-16">
         {filteredFilms.length > 0 ? (
           filteredFilms.map((film) => ( 
-            <Card {...film} class="w-full mx-auto max-w-xs md:max-w-none h-full flex flex-col justify-end" />
+            <CardFilm {...film} class="w-full mx-auto max-w-xs md:max-w-none h-full flex flex-col justify-end" />
           ))
         ) : (
           <p class="text-center text-gray-500 col-span-full">Aucun film ne correspond à cette catégorie.</p>
