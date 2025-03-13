@@ -1,5 +1,4 @@
 ---
-import { Picture } from 'astro:assets';
 import IconClock from '../assets/icons/icon-clock.svg';
 import IconHouse from '../assets/icons/icon-house.svg';
 const { ...invite } = Astro.props;
@@ -40,10 +39,10 @@ const formatBiographie = (bio) => {
   <article>
     <a href={`/invites/${invite.id}`}>
       {invite.photoUrl ? (
-        <Picture
+        <img
           class="w-full h-56 object-cover rounded-t-lg"
-          width={400}
-          height={500}
+          width="400"
+          height="500"
           src={invite.photoUrl}
           alt={`${invite.prenom_invite} ${invite.nom_invite} - Photo`}
         />
