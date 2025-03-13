@@ -1,7 +1,12 @@
 ---
 import LayoutWithHero from '../layouts/LayoutWithHero.astro';
-import LogoTwitter from '../assets/icons/icon-twitter-white.svg';
 
+import Sponsor1 from '../assets/img/ISFF.webp';
+import Sponsor2 from '../assets/img/logo-vectoriel-ville-de-belfort.webp';
+import Sponsor3 from '../assets/img/est_republicain.webp';
+import Sponsor4 from '../assets/img/decathlon.webp';
+
+import Accordion from '../components/Accordion.astro';
 import imgHero from '../assets/img/hero-homepage.webp';
 import { Picture } from 'astro:assets';
 
@@ -12,9 +17,49 @@ const subTitle2 = "Festival audiovisuel et sportif de Belfort.";
 const description = "Le festival « Ça va Trai'ler ! » est un événement audiovisuel et sportif qui se déroule à Belfort. Il propose des projections de films ainsi qu'une multitude d'activités sportives adaptées à tous les niveaux.";
 ---
 
-<LayoutWithHero title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Bienvenue au festival !" classContent="">
-	
+<LayoutWithHero title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Bienvenue au festival !" classContent="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 	<Fragment slot="content">
-		<p>Contenu principal de la page</p>
+		<section class="my-12 text-left">
+			<div class="max-w-3xl mx-auto space-y-4 text-lg">
+				<h2 class="text-3xl font-bold mb-6 text-primary-600">Découvrez l'alliance du cinéma et du sport.</h2>
+				<p class="leading-relaxed">Un festival unique proposant une expérience inédite où le sport et le cinéma se rencontrent pour célébrer l'effort physique et la créativité artistique.</p>
+				<p class="leading-relaxed">Que vous soyez passionné de courses ou cinéphile averti, cet événement vous offre des projections de courts-métrages, entrecoupées d'activités physiques accessibles à tous.</p>
+				<p class="leading-relaxed">De trails en pleine nature à la découverte de films qui capturent l'esprit de compétition et de dépassement de soi, ce festival allie dynamisme, convivialité et inspiration.</p>
+				<p class="leading-relaxed">Rejoignez-nous pour vivre des moments forts, alliant adrénaline et émotions, au cœur d'un cadre naturel exceptionnel.</p>
+			</div>
+		</section>
+
+		<div class="w-full max-w-3xl mx-auto my-12 px-4 sm:px-6 lg:px-0">
+			<Accordion />
+		</div>
+		
+		<section class="my-12  py-10 rounded-lg">
+			<h2 class="text-3xl font-bold mb-8 text-center text-primary-600">Ça va Trai'ler, c'est :</h2>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
+				<a href="/informations" class="bg-(--color-red) p-4 rounded shadow-sm text-center font-medium block hover:bg-red-400 transition-colors">Un festival unique dans son genre</a>
+				<a href="/informations" class="bg-(--color-orange) p-4 rounded shadow-sm text-center font-medium block hover:bg-orange-400 transition-colors">Un accès pour tous, et complètement gratuit</a>
+				<a href="/informations" class="bg-(--color-yellow) p-4 rounded shadow-sm text-center font-medium block hover:bg-yellow-400 transition-colors">Une semaine complète, au début du printemps</a>
+				<a href="/informations" class="bg-(--color-blue) p-4 rounded shadow-sm text-center font-medium block hover:bg-blue-400 transition-colors">Une participation active du public</a>
+			</div>
+		</section>
+
+		<section class="my-12">
+			<h2 class="text-3xl font-bold mb-8 text-center text-primary-600">Nos partenaires</h2>
+			<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 items-center my-6">
+				<a href="https://clermont-filmfest.org/" class="block">
+					<Picture src={Sponsor1} alt="ISFF" class="mx-auto h-16 w-auto object-contain hover:opacity-80 transition-opacity" />
+				</a>
+				<a href="https://www.belfort.fr/" class="block">
+					<Picture src={Sponsor2} alt="Ville de Belfort" class="mx-auto h-16 w-auto object-contain hover:opacity-80 transition-opacity" />
+				</a>
+				<a href="https://www.estrepublicain.fr/" class="block">
+					<Picture src={Sponsor3} alt="Est Républicain" class="mx-auto h-16 w-auto object-contain hover:opacity-80 transition-opacity" />
+				</a>
+				<a href="https://www.decathlon.fr/" class="block">
+					<Picture src={Sponsor4} alt="Decathlon" class="mx-auto h-16 w-auto object-contain hover:opacity-80 transition-opacity" />
+				</a>
+			</div>
+		</section>
 	</Fragment>
-  </LayoutWithHero>
+</LayoutWithHero>
