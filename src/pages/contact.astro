@@ -18,22 +18,22 @@ const subTitle2 = "Pour toute question ou demande d'information.";
 const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousiastes et cinéphiles, afin de partager ensemble leur amour du septième art et de la course à pied.";
 ---
 
-<LayoutWithHero title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Festival en extérieur" classContent="">
+<LayoutWithHero title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Page contact" classContent="">
     <Fragment slot="content">
 
         <div class="container mx-auto px-4 py-12">
         <h2 class="text-3xl font-bold text-center mb-12 max-w-3xl mx-auto">Des doutes, des hésitations, des questions ? Vous êtes à l'endroit parfait pour nous poser vos questions !</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          <div class="bg-white p-6 rounded-lg shadow-md text-center hover:bg-(--color-background) transition-all duration-300">
+          <div class="bg-white p-6 rounded-2xl shadow-md text-center hover:bg-red-300 transition-all duration-300">
             <h3 class="text-xl font-semibold mb-4">Questions fréquentes</h3>
             <p>Consultez notre <a href="/informations#faq" class="text-(--color-red) transition-colors hover:text-(--color-orange)" onclick="document.querySelector('#faq').scrollIntoView({behavior: 'smooth'}); return false;">FAQ</a> pour trouver rapidement des réponses à vos interrogations.</p>
           </div>
-          <div class="bg-white p-6 rounded-lg shadow-md text-center hover:bg-(--color-background) transition-all duration-300">
+          <div class="bg-white p-6 rounded-2xl shadow-md text-center hover:bg-orange-300 transition-all duration-300">
             <h3 class="text-xl font-semibold mb-4">Support technique</h3>
             <p>Besoin d'aide pour votre inscription ou réservation ? Notre équipe est là pour vous.</p>
           </div>
-          <div class="bg-white p-6 rounded-lg shadow-md text-center hover:bg-(--color-background) transition-all duration-300">
+          <div class="bg-white p-6 rounded-2xl shadow-md text-center hover:bg-yellow-300 transition-all duration-300">
             <h3 class="text-xl font-semibold mb-4">Informations pratiques</h3>
             <p>Renseignements sur les horaires, l'accès et les services disponibles pendant le festival.</p>
           </div>
