@@ -27,9 +27,13 @@ function formatDuree(duree) {
     ? `${heures}h${reste > 0 ? reste : ""}`
     : `${reste} min`;
 }
+
+const title = activite.titre_activite;
+const description = `Découvrez "${activite.titre_activite}", ayant lieu le ${new Date(activite.date_activite).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} au festival.`;
+
 --- 
 
-<Layout>
+<Layout title={title} description={description}>
     <main class="max-w-7xl mx-auto px-4 py-30">
         <!-- Navigation et Actions -->
         <div class="flex justify-between items-center mb-6 py-2">

@@ -37,9 +37,12 @@ function getRoleBgStyle(role, isActive) {
   const color = roleColorMap[role] || 'var(--color-red)';
   return `background-color: ${color}; color: white;`;
 }
+
+const title = "Liste des invités";
+const description = "Découvrez les films projetés lors de la prochaine édition du festival.";
 ---
 
-<Layout>
+<Layout title={title} description={description}>
   <div class="min-h-screen py-30">
     <div class="container mx-auto px-4">
       <h1 class="text-3xl lg:text-6xl font-bold text-center mb-8">Nos invités</h1>

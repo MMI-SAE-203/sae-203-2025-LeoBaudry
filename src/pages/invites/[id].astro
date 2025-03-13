@@ -12,9 +12,12 @@ if (!invite) {
     console.error(`Invité with id ${id} not found`);
     return Astro.redirect("/invites");
 }
+
+const title = invite.prenom_invite + ' ' + invite.nom_invite;
+const description = `Découvrez "${invite.prenom_invite + ' ' + invite.nom_invite}" pendant ce festival !`;
 ---
 
-<Layout>
+<Layout title={title} description={description}>
     <main class="max-w-7xl mx-auto px-4 py-30">
         <!-- Navigation et Actions -->
         <div class="flex justify-between items-center mb-6 py-2">

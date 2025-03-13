@@ -19,9 +19,13 @@ if (!film) {
 const inviteAssocie = await getInviteForFilm(id);
 
 const embedUrl = `https://www.youtube.com/embed/${film.bande_annonce_film.split('v=')[1]}`; 
+
+const title = film.titre_film;
+const description = `Découvrez "${film  .titre_film}", un film de ${film.realisateurs} projeté le ${new Date(film.date_projection_film).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} au festival.`;
+
 --- 
 
-<Layout>
+<Layout title={title} description={description}>
     <main class="max-w-7xl mx-auto px-4 py-30">
         <!-- Navigation et Actions -->
         <div class="flex justify-between items-center mb-6 py-2">
