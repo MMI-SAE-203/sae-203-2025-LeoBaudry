@@ -117,6 +117,34 @@ export const oneFilm = async (id) => {
 };
 
 // ----------------------------------------------------------------------------- //
+
+export const getInviteForFilm = async (filmId) => {
+  try {
+    if (!filmId) return null;
+    
+    // D'abord récupérer le film pour obtenir l'ID de l'invité
+    const film = await pb.collection("Film").getOne(filmId);  // "film" au lieu de "Films"
+    
+    if (!film.invite_associe) return null;
+    
+    // Ensuite récupérer les informations de l'invité
+    const invite = await pb.collection("Invites").getOne(film.invite_associe);
+    
+    // Récupération de l'URL de la photo de l'invité
+    const photoUrl = invite.photo_invite 
+      ? pb.files.getURL(invite, invite.photo_invite) 
+      : null;
+    
+    return {
+      ...invite,
+      photoUrl
+    };
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'invité associé au film :", error);
+    return null;
+  }
+};
+// ----------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------- //
 // ----------------------------------------------------------------------------- //
 
@@ -253,6 +281,35 @@ export const getInvites = async (collection = "Invites") => {
       };
     } catch (error) {
       console.error("Erreur lors de la récupération de l'activité :", error);
+      return null;
+    }
+  };
+
+  // ----------------------------------------------------------------------------- //
+
+  export const getInviteForActivite = async (activiteId) => {
+    try {
+      if (!activiteId) return null;
+      
+      // D'abord récupérer l'activité pour obtenir l'ID de l'invité
+      const activite = await pb.collection("Activite").getOne(activiteId);
+      
+      if (!activite.invite_associe) return null;
+      
+      // Ensuite récupérer les informations de l'invité
+      const invite = await pb.collection("Invites").getOne(activite.invite_associe);
+      
+      // Récupération de l'URL de la photo de l'invité
+      const photoUrl = invite.photo_invite 
+        ? pb.files.getURL(invite, invite.photo_invite) 
+        : null;
+      
+      return {
+        ...invite,
+        photoUrl
+      };
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'invité associé à l'activité :", error);
       return null;
     }
   };

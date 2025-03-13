@@ -3,18 +3,25 @@ import { Picture } from 'astro:assets';
 import IconHouse from '../assets/icons/icon-house.svg';
 import IconClock from '../assets/icons/icon-clock.svg';
 const { ...activite } = Astro.props;
----
 
+// Fonction pour formater la durée (en minutes) en format heures minutes"
+function formatDuree(duree) {
+  const minutes = parseInt(duree, 10);
+  if (isNaN(minutes)) return "Non spécifié";
+
+  const heures = Math.floor(minutes / 60);
+  const reste = minutes % 60;
+  return heures > 0
+    ? `${heures}h${reste > 0 ? reste : ""}`
+    : `${reste} min`;
+}
+---
 <div class="w-72 md:w-84 lg:w-72 xl:w-72 2xl:w-84 rounded-lg overflow-hidden shadow-sm bg-white mx-auto">
   <article>
-
-
-
     <div class="px-6 py-4">
-
       <p class="text-gray-600 text-sm mb-2">
         <span>
-            {new Date(activite.date_activite).toLocaleDateString('fr-FR', {
+          {new Date(activite.date_activite).toLocaleDateString('fr-FR', {
             day: 'numeric',
             month: 'long', 
             year: 'numeric',
@@ -22,35 +29,31 @@ const { ...activite } = Astro.props;
             minute: '2-digit'
           })}
         </span>
+      </p>
 
-        
-        <div class="flex items-center mb-2">
-          <h3 class="font-bold text-xl mr-2">
-            <a href={`/activites/${activite.id}`} class="text-gray-900 hover:text-gray-700">
-              {activite.titre_activite}
-            </a>
-          </h3>
-          <p class="text-sm font-medium text-white bg-(--color-orange) px-2 py-1 rounded">
-            {activite.categorie_activite}
-          </p>
-        </div>
+      <div class="flex items-center mb-2">
+        <h3 class="font-bold text-xl mr-2">
+          <a href={`/activites/${activite.id}`} class="text-gray-900 hover:text-gray-700">
+            {activite.titre_activite}
+          </a>
+        </h3>
+        <p class="text-sm font-medium text-white bg-orange-500 px-2 py-1 rounded">
+          {activite.categorie_activite}
+        </p>
+      </div>
 
-      <hr class="border-t border-gray-200 my-2" />
+      <hr class="border-t border-gray-200 mb-5" />
 
       <p class="text-gray-600 text-md mb-2 flex flex-wrap gap-4">
         <span class="flex items-center">
-          <IconClock class="w-6 h-6 mr-1"/>
-          {activite.duree_activite || "Non spécifié"}
+          <IconClock class="w-6 h-6 mr-1" />
+          {formatDuree(activite.duree_activite)}
         </span>
         <span class="flex items-center">
-          <IconHouse class="w-6 h-6 mr-1"/>
+          <IconHouse class="w-6 h-6 mr-1" />
           {activite.lieu_activite || "Non spécifié"} 
         </span>
       </p>
-
-
     </div>
-
   </article>
-
 </div>

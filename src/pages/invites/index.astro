@@ -78,12 +78,9 @@ function getRoleBgStyle(role, isActive) {
   </div>
 
   <script>
-    // Cette fonction s'exécute côté client pour assurer que les filtres fonctionnent correctement
     document.addEventListener('astro:page-load', () => {
-      // S'assurer que le script s'exécute après le chargement complet du DOM
       console.log("Script de filtrage initialisé");
       
-      // Obtenir l'URL courante et le paramètre de rôle actif
       const currentUrl = new URL(window.location.href);
       const currentRole = currentUrl.searchParams.get('role') || 'Tous';
       
@@ -99,15 +96,12 @@ function getRoleBgStyle(role, isActive) {
           const role = button.getAttribute('data-role');
           console.log("Filtre cliqué:", role);
           
-          // Construire une nouvelle URL avec le paramètre de rôle
           const newUrl = new URL(window.location.href);
           if (role === 'Tous') {
             newUrl.searchParams.delete('role');
           } else {
             newUrl.searchParams.set('role', role);
           }
-          
-          // Naviguer vers la nouvelle URL
           window.location.href = newUrl.toString();
         });
       });

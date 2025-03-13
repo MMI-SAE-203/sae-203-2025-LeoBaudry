@@ -1,0 +1,162 @@
+--- 
+import { oneActivite, getInviteForActivite } from '../../../backend/backend.mjs'; 
+import Layout from "../../layouts/Layout.astro"; 
+import IconHouse from '../../assets/icons/icon-house.svg'; 
+import IconClock from '../../assets/icons/icon-clock.svg'; 
+import IconCategory from '../../assets/icons/icon-category.svg';
+import IconCalendar from '../../assets/icons/icon-calendar.svg';
+
+const { id } = Astro.params; 
+const activite = await oneActivite(id);
+
+if (!activite) {
+    console.error(`Activité with id ${id} not found`); 
+    return Astro.redirect("/activites"); 
+}
+
+// Récupérer l'invité associé à cette activité
+const inviteAssocie = await getInviteForActivite(id);
+
+function formatDuree(duree) {
+  const minutes = parseInt(duree, 10);
+  if (isNaN(minutes)) return "Non spécifié";
+
+  const heures = Math.floor(minutes / 60);
+  const reste = minutes % 60;
+  return heures > 0
+    ? `${heures}h${reste > 0 ? reste : ""}`
+    : `${reste} min`;
+}
+--- 
+
+<Layout>
+    <main class="max-w-7xl mx-auto px-4 py-30">
+        <!-- Navigation et Actions -->
+        <div class="flex justify-between items-center mb-6 py-2">
+            <a href="/activites" class="text-gray-600 flex items-center gap-2">
+                <span class="text-red-600 font-semibold text-sm">←</span> 
+                <span class="text-red-600 font-semibold">Retour à la liste</span>
+            </a>
+        </div>
+
+        <!-- Titre -->
+        <div class="mb-6">
+            <h1 class="text-2xl lg:text-3xl font-semibold mb-1">{activite.titre_activite}</h1>
+        </div>
+
+        <!-- Container principal pour les informations -->
+        <div class="flex flex-col md:flex-row gap-8 pb-8">
+
+
+            <!-- Caractéristiques et Description -->
+            <div class="flex-1">
+                <!-- Caractéristiques principales -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6 bg-white rounded-lg border border-orange-100 mb-8">
+                    <!-- Date de l'activité -->
+                    <div>
+                        <p class="text-gray-600 text-sm mb-1">Date de l'activité</p>
+                        <div class="flex items-center gap-2">
+                            <IconCalendar class="w-6 h-6" />
+                            <span class="font-semibold">
+                                {new Date(activite.date_activite).toLocaleDateString('fr-FR', {
+                                    day: 'numeric',
+                                    month: 'long',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Lieu -->
+                    <div>
+                        <p class="text-gray-600 text-sm mb-2">Lieu</p>
+                        <div class="flex items-center gap-2">
+                            <IconHouse class="w-8 h-8" />
+                            <span class="font-semibold">{activite.lieu_activite}</span>
+                        </div>
+                    </div>
+
+                    <!-- Durée -->
+                    {activite.duree_activite && (
+                        <div>
+                            <p class="text-gray-600 text-sm mb-2">Durée</p>
+                            <div class="flex items-center gap-2">
+                                <IconClock class="w-8 h-8" />
+                                <span class="font-semibold">{formatDuree(activite.duree_activite)}
+                                </span>
+                            </div>
+                        </div>
+                    )}
+
+                    <!-- Catégorie -->
+                    <div>
+                        <p class="text-gray-600 text-sm mb-2">Catégorie</p>
+                        <div class="flex items-center gap-2">
+                            <IconCategory class="w-6 h-6" />
+                            <span class="font-semibold">{activite.categorie_activite}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <h2 class="text-md xl:text-xl font-semibold mb-4">À propos de l'activité</h2>
+                    <div class="text-gray-600 space-y-4" set:html={activite.description_activite} />
+                </div>
+            </div>
+        </div>
+
+        <!-- Images supplémentaires -->
+        {activite.imageUrls && activite.imageUrls.length > 0 && (
+            <div class="my-8">
+                <h2 class="text-xl font-semibold mb-4">Galerie photos</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    {activite.imageUrls.map((imgUrl, index) => (
+                        <img 
+                            key={index} 
+                            src={imgUrl} 
+                            alt={`Image ${index + 1} de ${activite.titre_activite}`} 
+                            class="w-full h-64 object-cover rounded-lg shadow hover:shadow-lg transition-shadow"
+                        />
+                    ))}
+                </div>
+            </div>
+        )}
+
+        <!-- Participants -->
+        {activite.liste_participants && activite.liste_participants.length > 0 && (
+            <div class="my-8">
+                <h2 class="text-xl font-semibold mb-4">Liste des participants</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                    {activite.liste_participants.split(',').map((participant, index) => (
+                        <div key={index} class="bg-(--color-yellow) p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <p class="text-gray-800 font-bold text-center">{participant.trim()}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )}
+
+<!-- Invité associé -->
+{inviteAssocie && (
+    <div class="my-8 max-w-md mx-auto">
+        <h2 class="text-xl font-semibold mb-4 text-center">Invité Associé</h2>
+        <a href={`/invites/${inviteAssocie.id}`} class="flex items-center gap-4 p-4 bg-white rounded-4xl border border-orange-100 hover:bg-gray-50 transition-colors">
+            {inviteAssocie.photoUrl && (
+                <img 
+                    src={inviteAssocie.photoUrl}
+                    alt={`Photo de ${inviteAssocie.nom_invite} ${inviteAssocie.prenom_invite}`}
+                    class="w-36 h-36 lg:w-48 lg:h-48 object-cover rounded-full"
+                />
+            )}
+            <div>
+                <p class="font-semibold text-lg">{inviteAssocie.nom_invite} {inviteAssocie.prenom_invite}</p>
+                <p class="text-gray-600">{inviteAssocie.role_invite}</p>
+            </div>
+        </a>
+    </div>
+)}
+    </main>
+</Layout>

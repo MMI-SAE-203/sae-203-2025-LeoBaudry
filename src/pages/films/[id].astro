@@ -1,5 +1,5 @@
 --- 
-import { oneFilm, getFilms } from '../../../backend/backend.mjs'; 
+import { oneFilm, getInviteForFilm } from '../../../backend/backend.mjs';
 import Layout from "../../layouts/Layout.astro"; 
 import IconFlagFr from '../../assets/icons/flag-fr.svg'; 
 import IconClock from '../../assets/icons/icon-clock.svg'; 
@@ -15,6 +15,8 @@ if (!film) {
     console.error(`Film with id ${id} not found`); 
     return Astro.redirect("/films"); 
 }
+
+const inviteAssocie = await getInviteForFilm(id);
 
 const embedUrl = `https://www.youtube.com/embed/${film.bande_annonce_film.split('v=')[1]}`; 
 --- 
@@ -163,20 +165,20 @@ const embedUrl = `https://www.youtube.com/embed/${film.bande_annonce_film.split(
                 )}
 
 <!-- Invité associé -->
-{film.expand?.invite_associe && (
-    <div class="my-8">
-        <h2 class="text-xl font-semibold mb-4">Invité Associé</h2>
-        <a href={`/invites/${film.expand.invite_associe.id}`} class="flex items-center gap-4 p-4 bg-white rounded-lg border border-orange-100 hover:bg-orange-50 transition-colors">
-            {film.expand.invite_associe.photo_invite && (
+{inviteAssocie && (
+    <div class="my-8 max-w-md mx-auto">
+        <h2 class="text-xl font-semibold mb-4 text-center">Invité Associé</h2>
+        <a href={`/invites/${inviteAssocie.id}`} class="flex items-center gap-4 p-4 bg-white rounded-4xl border border-orange-100 hover:bg-gray-50 transition-colors">
+            {inviteAssocie.photoUrl && (
                 <img 
-                    src={pb.files.getUrl(film.expand.invite_associe, film.expand.invite_associe.photo_invite)}
-                    alt={`Photo de ${film.expand.invite_associe.nom_invite} ${film.expand.invite_associe.prenom_invite}`}
-                    class="w-20 h-20 object-cover rounded-full"
+                    src={inviteAssocie.photoUrl}
+                    alt={`Photo de ${inviteAssocie.nom_invite} ${inviteAssocie.prenom_invite}`}
+                    class="w-36 h-36 lg:w-48 lg:h-48 object-cover rounded-full"
                 />
             )}
             <div>
-                <p class="font-semibold text-lg">{film.expand.invite_associe.nom_invite} {film.expand.invite_associe.prenom_invite}</p>
-                <p class="text-gray-600">{film.expand.invite_associe.role_invite}</p>
+                <p class="font-semibold text-lg">{inviteAssocie.nom_invite} {inviteAssocie.prenom_invite}</p>
+                <p class="text-gray-600">{inviteAssocie.role_invite}</p>
             </div>
         </a>
     </div>
