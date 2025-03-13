@@ -1,6 +1,6 @@
 // backend.mjs
 import PocketBase from 'pocketbase';
-// const pb = new PocketBase('http://127.0.0.1:8090') ;
+// const pb = new PocketBase('http://127.0.0.1:8090') ; POUR LE DEV LOCAL
 const pb = new PocketBase('https://pb-sae-203.leo-baudry.fr:443');
 
 // 1. Tous les films triés par date de projection
