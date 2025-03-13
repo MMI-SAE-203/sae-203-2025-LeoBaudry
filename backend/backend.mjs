@@ -40,9 +40,9 @@ export async function inviteById(id) {
   
     // Vérifie si l'invité est un acteur ou un réalisateur
     if (invite.role_invite === "Acteur" || invite.role_invite === "Réalisateur") {
-      return invite; // Retourne l'invité si c'est un acteur ou un réalisateur
+      return invite; 
     } else {
-      // Retourne null si ce n'est pas un acteur ou un réalisateur
+      // si ce n'est pas un acteur ou un réalisateur
       return null;
     }
   }
@@ -188,18 +188,14 @@ export const getInvites = async (collection = "Invites") => {
 
   export const getInviteContenuAssocie = async (inviteId) => {
     try {
-      console.log(`Fetching content for invite ID: ${inviteId}`);
       
       // Récupérer les films associés
       const filterFilm = `invite_associe = "${inviteId}"`;
-      console.log(`Film filter: ${filterFilm}`);
       
       const filmsAssocies = await pb.collection("Film").getList(1, 50, {
         filter: filterFilm,
       });
-      
-      console.log(`Found ${filmsAssocies.items.length} associated films`);
-      
+            
       // Formater les films avec leurs URLs d'images
       const films = filmsAssocies.items.map(film => ({
         id: film.id,
@@ -211,14 +207,11 @@ export const getInvites = async (collection = "Invites") => {
       
       // Récupérer les activités associées
       const filterActivite = `invite_associe = "${inviteId}"`;
-      console.log(`Activite filter: ${filterActivite}`);
       
       const activitesAssociees = await pb.collection("Activite").getList(1, 50, {
         filter: filterActivite,
       });
-      
-      console.log(`Found ${activitesAssociees.items.length} associated activities`);
-      
+            
       // Formater les activités avec leurs URLs d'images
       const activites = activitesAssociees.items.map(activite => ({
         id: activite.id,
