@@ -14,7 +14,7 @@ const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousi
 <LayoutWithHero title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Festival en extérieur" classContent="">	
   <Fragment slot="content">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <!-- Titre principal -->
+
       <div class="text-center mb-16">
         <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Infos Pratiques</h1>
         <h2 class="text-2xl text-gray-800 max-w-3xl mx-auto">Tout ce que vous devez savoir pour profiter au mieux de l'événement.</h2>
@@ -25,10 +25,8 @@ const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousi
         Que vous soyez amateur de grands espaces ou de lieux chargés d'histoire, ce cadre unique allie parfaitement nature et culture, offrant un décor idéal 
         pour une immersion totale dans le cinéma et le sport.</p>
       </div>
-      <!-- Grid avec 2 colonnes -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
   
-        <!-- Section Tarifs (Colonne 1) -->
         <div class="space-y-6">
           <h2 class="text-3xl font-bold text-gray-900 mb-6">Tarifs</h2>
           <h3 class="text-xl font-semibold text-gray-900">Festival Gratuit</h3>
@@ -42,7 +40,6 @@ const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousi
             </div>
         </div>
   
-        <!-- Section Lieux (Colonne 2) -->
         <div class="space-y-6">
           <h2 class="text-3xl font-bold text-gray-900 mb-6">Lieux</h2>
           <h3 class="text-xl font-semibold text-gray-900">Parc de la Douce</h3>
@@ -61,7 +58,6 @@ const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousi
   
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
   
-        <!-- Section Hébergement (Colonne 1) -->
         <div class="space-y-6">
           <h2 class="text-3xl font-bold text-gray-900 mb-6">Hébergement</h2>
           <h3 class="text-xl font-semibold text-gray-900">Hôtels</h3>
@@ -75,7 +71,6 @@ const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousi
           <p><strong>Camping Z</strong> - Un cadre naturel avec de nombreuses installations.</p>
         </div>
   
-        <!-- Section Transport (Colonne 2) -->
         <div class="space-y-6">
           <h2 class="text-3xl font-bold text-gray-900 mb-6">Transport</h2>
           <h3 class="text-xl font-semibold text-gray-900">Accès en Transports en commun</h3>
@@ -94,9 +89,8 @@ const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousi
   
       <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
   
-        <!-- Section FAQ (Colonne 1) -->
         <div class="space-y-6">
-          <h2 class="text-3xl font-bold text-gray-900 mb-6">FAQ</h2>
+            <h2 id="faq" class="text-3xl font-bold text-gray-900 mb-6">FAQ</h2>
           <h3 class="text-xl font-semibold text-gray-900">Q: Le festival est-il accessible aux personnes handicapées ?</h3>
           <p>Oui, toutes nos installations sont accessibles aux personnes à mobilité réduite.</p>
           <h3 class="text-xl font-semibold text-gray-900">Q: Puis-je amener mes enfants ?</h3>
