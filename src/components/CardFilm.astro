@@ -1,5 +1,4 @@
 ---
-import { Picture } from 'astro:assets';
 import IconFlagFr from '../assets/icons/flag-fr.svg';
 import IconClock from '../assets/icons/icon-clock.svg';
 const { ...film } = Astro.props;
@@ -10,10 +9,10 @@ const { ...film } = Astro.props;
 
     <a href={`/films/${film.id}`}>
       {film.imageUrl ? (
-        <Picture
+        <img
           class="w-full h-auto object-cover rounded-t-lg"
-          width={500}
-          height={700}
+          width="500"
+          height="700"
           src={film.imageUrl}
           alt={`${film.film_name} - Affiche`}
         />
@@ -36,18 +35,18 @@ const { ...film } = Astro.props;
             minute: '2-digit'
           })}
         </span>
-
+      </p>
         
-        <div class="flex items-center mb-2">
-          <h3 class="font-bold text-xl mr-2">
-            <a href={`/films/${film.id}`} class="text-gray-900 hover:text-gray-700">
-              {film.titre_film}
-            </a>
-          </h3>
-          <p class="text-sm font-medium text-white bg-(--color-orange) px-2 py-1 rounded">
-            {film.categorie_film}
-          </p>
-        </div>
+      <div class="flex items-center mb-2">
+        <h3 class="font-bold text-xl mr-2">
+          <a href={`/films/${film.id}`} class="text-gray-900 hover:text-gray-700">
+            {film.titre_film}
+          </a>
+        </h3>
+        <p class="text-sm font-medium text-white bg-(--color-orange) px-2 py-1 rounded">
+          {film.categorie_film}
+        </p>
+      </div>
 
       <hr class="border-t border-gray-200 my-2" />
 
@@ -62,10 +61,7 @@ const { ...film } = Astro.props;
         </span>
       </p>
 
-
     </div>
 
   </article>
-
 </div>
-
