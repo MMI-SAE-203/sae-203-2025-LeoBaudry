@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/CardFilm.astro';
+import { getFilms } from '../../../backend/backend.mjs';
+
+// Récupération de tous les films
+const films = await getFilms();
+
+const uniqueCategories = [...new Set(films.map(film => film.categorie_film))];
+const genreFilters = ['Tous les films', ...uniqueCategories];
+
+const { searchParams } = Astro.url;
+const activeGenre = searchParams.get('genre') || 'Tous les films';
+
+const filteredFilms = activeGenre === 'Tous les films'
+  ? films
+  : films.filter(film => film.categorie_film === activeGenre);
+
+const countByGenre = {
+  'Tous les films': films.length
+};
+
+uniqueCategories.forEach(category => {
+  countByGenre[category] = films.filter(film => film.categorie_film === category).length;
+});
+
+const title = "Programmation des films";
+const description = "Découvrez les films projetés lors de la prochaine édition du festival.";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen py-30">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl lg:text-6xl font-bold text-center mb-8">Programmation des films</h1>
+      
+      <!-- Filtres de catégorie -->
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        {genreFilters.map((genre) => (
+          <a 
+            href={`?genre=${encodeURIComponent(genre)}`}
+            class={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 filter-button ${
+              activeGenre === genre 
+                ? 'bg-(--color-orange) text-white' 
+                : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+            }`}
+            data-genre={genre}
+          >
+            {genre} ({countByGenre[genre] || 0})
+          </a>
+        ))}
+      </div>
+
+      <!-- Résultat de recherche -->
+      <p class="text-center text-gray-600 mb-8">
+        {activeGenre === 'Tous les films' 
+          ? `Affichage de tous les films (${filteredFilms.length})` 
+          : `Affichage des films de catégorie "${activeGenre}" (${filteredFilms.length})`}
+      </p>
+
+      <!-- Grille des cartes de films -->
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 sm:gap-16">
+        {filteredFilms.length > 0 ? (
+          filteredFilms.map((film) => ( 
+            <Card {...film} class="w-full mx-auto max-w-xs md:max-w-none h-full flex flex-col justify-end" />
+          ))
+        ) : (
+          <p class="text-center text-gray-500 col-span-full">Aucun film ne correspond à cette catégorie.</p>
+        )}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Cette fonction s'exécute côté client pour assurer que les filtres fonctionnent correctement
+    document.addEventListener('DOMContentLoaded', () => {
+      // S'assurer que le script s'exécute après le chargement complet du DOM
+      console.log("Script de filtrage de films initialisé");
+      
+      // Obtenir l'URL courante et le paramètre de genre actif
+      const currentUrl = new URL(window.location.href);
+      const currentGenre = currentUrl.searchParams.get('genre') || 'Tous les films';
+      
+      console.log("Genre actif:", currentGenre);
+      
+      // Sélectionner tous les boutons de filtre
+      const filterButtons = document.querySelectorAll('.filter-button');
+      
+      // Ajouter un gestionnaire d'événements à chaque bouton
+      filterButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          const genre = button.getAttribute('data-genre');
+          console.log("Filtre de genre cliqué:", genre);
+          
+          // Construire une nouvelle URL avec le paramètre de genre
+          const newUrl = new URL(window.location.href);
+          if (genre === 'Tous les films') {
+            newUrl.searchParams.delete('genre');
+          } else {
+            newUrl.searchParams.set('genre', genre);
+          }
+          
+          // Naviguer vers la nouvelle URL
+          window.location.href = newUrl.toString();
+        });
+      });
+    });
+  </script>
+</Layout>

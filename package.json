@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.3",
+    "@astrojs/netlify": "^6.2.3",
     "@fontsource/dm-sans": "^5.2.5",
     "@fontsource/mulish": "^5.2.5",
     "@fontsource/poppins": "^5.2.5",

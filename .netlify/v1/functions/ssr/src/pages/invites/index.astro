@@ -1,0 +1,113 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CardInvite from '../../components/CardInvite.astro';
+import { getInvites } from '../../../backend/backend.mjs';
+
+// Récupération de tous les invités
+const invites = await getInvites();
+
+// Extraction des rôles uniques pour créer les filtres
+const uniqueRoles = [...new Set(invites.map(invite => invite.role_invite))];
+const roles = ['Tous', ...uniqueRoles];
+
+const { searchParams } = Astro.url;
+const activeRole = searchParams.get('role') || 'Tous';
+
+const invitesFiltered = activeRole === 'Tous' 
+  ? invites 
+  : invites.filter(invite => invite.role_invite === activeRole);
+
+const countByRole = {
+  'Tous': invites.length
+};
+
+uniqueRoles.forEach(r => {
+  countByRole[r] = invites.filter(invite => invite.role_invite === r).length;
+});
+
+const roleColorMap = {
+  'Tous': 'var(--color-red)',
+  'Réalisateur': 'var(--color-orange)',
+  'Acteur': 'var(--color-yellow)',
+  'Animateur': 'var(--color-blue)'
+};
+
+function getRoleBgStyle(role, isActive) {
+  if (!isActive) return '';
+  const color = roleColorMap[role] || 'var(--color-red)';
+  return `background-color: ${color}; color: white;`;
+}
+
+const title = "Liste des invités";
+const description = "Découvrez les films projetés lors de la prochaine édition du festival.";
+---
+
+<Layout title={title} description={description}>
+  <div class="min-h-screen py-30">
+    <div class="container mx-auto px-4">
+      <h1 class="text-3xl lg:text-6xl font-bold text-center mb-8">Nos invités</h1>
+      
+      <!-- Filtres de rôle -->
+      <div class="flex flex-wrap justify-center gap-3 mb-10">
+        {roles.map((roleOption) => (
+            <a 
+            href={`?role=${encodeURIComponent(roleOption)}`}
+            class={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-300 filter-button ${activeRole === roleOption ? '' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+            data-role={roleOption}
+            style={getRoleBgStyle(roleOption, activeRole === roleOption)}>
+        {roleOption} ({countByRole[roleOption] || 0})
+        </a>
+        ))}
+      </div>
+
+      <!-- Résultat de recherche -->
+      <p class="text-center text-gray-600 mb-8">
+        {activeRole === 'Tous' 
+          ? `Affichage de tous les invités (${invitesFiltered.length})` 
+          : `Affichage des invités de type "${activeRole}" (${invitesFiltered.length})`}
+      </p>
+
+      <!-- Grille des cartes d'invités -->
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-12 sm:gap-16">
+        {invitesFiltered.length > 0 ? (
+          invitesFiltered.map((invite) => ( 
+            <CardInvite {...invite} class="w-full mx-auto max-w-xs md:max-w-none h-full flex flex-col justify-end" />
+          ))
+        ) : (
+          <p class="text-center text-gray-500 col-span-full">Aucun invité ne correspond à ce filtre.</p>
+        )}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      console.log("Script de filtrage initialisé");
+      
+      const currentUrl = new URL(window.location.href);
+      const currentRole = currentUrl.searchParams.get('role') || 'Tous';
+      
+      console.log("Rôle actif:", currentRole);
+      
+      // Sélectionner tous les boutons de filtre
+      const filterButtons = document.querySelectorAll('.filter-button');
+      
+      // Ajouter un gestionnaire d'événements à chaque bouton
+      filterButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+          event.preventDefault();
+          const role = button.getAttribute('data-role');
+          console.log("Filtre cliqué:", role);
+          
+          const newUrl = new URL(window.location.href);
+          if (role === 'Tous') {
+            newUrl.searchParams.delete('role');
+          } else {
+            newUrl.searchParams.set('role', role);
+          }
+          window.location.href = newUrl.toString();
+        });
+      });
+    });
+  </script>
+</Layout>

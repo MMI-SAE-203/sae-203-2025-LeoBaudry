@@ -1,0 +1,117 @@
+---
+import LayoutWithHero from '../layouts/LayoutWithHero.astro';
+import IconFacebook from '../assets/icons/icon-facebook-white.svg';
+import IconInstagram from '../assets/icons/icon-instagram-white.svg';
+import IconTwitter from '../assets/icons/icon-twitter-white.svg';
+import IconYoutube from '../assets/icons/icon-youtube-white.svg';
+import IconTiktok from '../assets/icons/icon-tiktok-white.svg';
+
+
+
+import imgHero from '../assets/img/contact-01.webp';
+import { Picture } from 'astro:assets';
+
+
+const title = "Contact";
+const subTitle = "Rentrer en contact avec l'équipe";
+const subTitle2 = "Pour toute question ou demande d'information.";
+const description = "« Ça va Trai'ler ! » accueille des festivaliers enthousiastes et cinéphiles, afin de partager ensemble leur amour du septième art et de la course à pied.";
+---
+
+<LayoutWithHero title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Page contact" classContent="">
+    <Fragment slot="content">
+
+        <div class="container mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold text-center mb-12 max-w-3xl mx-auto">Des doutes, des hésitations, des questions ? Vous êtes à l'endroit parfait pour nous poser vos questions !</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div class="bg-white p-6 rounded-2xl shadow-md text-center hover:bg-red-300 transition-all duration-300">
+            <h3 class="text-xl font-semibold mb-4">Questions fréquentes</h3>
+            <p>Consultez notre <a href="/informations#faq" class="text-(--color-red) transition-colors hover:text-(--color-orange)" onclick="document.querySelector('#faq').scrollIntoView({behavior: 'smooth'}); return false;">FAQ</a> pour trouver rapidement des réponses à vos interrogations.</p>
+          </div>
+          <div class="bg-white p-6 rounded-2xl shadow-md text-center hover:bg-orange-300 transition-all duration-300">
+            <h3 class="text-xl font-semibold mb-4">Support technique</h3>
+            <p>Besoin d'aide pour votre inscription ou réservation ? Notre équipe est là pour vous.</p>
+          </div>
+          <div class="bg-white p-6 rounded-2xl shadow-md text-center hover:bg-yellow-300 transition-all duration-300">
+            <h3 class="text-xl font-semibold mb-4">Informations pratiques</h3>
+            <p>Renseignements sur les horaires, l'accès et les services disponibles pendant le festival.</p>
+          </div>
+        </div>
+
+        <h3 class="text-3xl font-bold text-center mb-8">Formulaire de Contact</h3>
+        <form action="#" method="POST" class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-md">
+          <div class="mb-4">
+            <label for="name" class="block text-sm font-medium text-gray-700">Nom</label>
+            <input type="text" id="name" name="name" required class="mt-1 p-3 w-full border border-gray-300 rounded-md" />
+          </div>
+          <div class="mb-4">
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" id="email" name="email" required class="mt-1 p-3 w-full border border-gray-300 rounded-md" />
+          </div>
+          <div class="mb-4">
+            <label for="subject" class="block text-sm font-medium text-gray-700">Sujet</label>
+            <input type="text" id="subject" name="subject" required class="mt-1 p-3 w-full border border-gray-300 rounded-md" />
+          </div>
+          <div class="mb-4">
+            <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+            <textarea id="message" name="message" rows="4" required class="mt-1 p-3 w-full border border-gray-300 rounded-md"></textarea>
+          </div>
+          <button type="submit" class="w-full bg-(--color-orange) text-white py-3 rounded-md hover:bg-(--color-red)">Envoyer</button>
+        </form>
+      </div>
+  
+      <div class="container mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold text-center mb-8">Coordonnées</h2>
+        <div class="text-center space-y-4">
+          <p><strong>Email :</strong> <a href="mailto:contact@festival-trailer.com" class="text-(--color-red)">contact@festival-tailer.com</a></p>
+          <p><strong>Téléphone :</strong> <a href="tel:+33123456789" class="text-(--color-red)">+33 1 23 45 67 89</a></p>
+
+          <address class="not-italic">
+            <a href="https://www.google.com/maps?q=Parc+de+la+Douce,+Rue+Georges+Pompidou,+90000+Belfort,+France" target="_blank" rel="noopener noreferrer">
+              <strong>Parc de la Douce</strong><br>
+              Rue Georges Pompidou<br>
+              90000 Belfort, France
+            </a>
+          </address>
+        </div>
+      </div>
+  
+      <div class="container mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold text-center mb-8">Suivez-nous</h2>
+        <div class="flex justify-center gap-8 flex-wrap">
+          <a href="https://www.facebook.com/" target="_blank" class="flex flex-col items-center hover:scale-110 transition-transform">
+            <div class="w-12 h-12 flex items-center justify-center">
+              <IconFacebook class="stroke-blue-600 w-8 h-8"/>
+            </div>
+            <span>Facebook</span>
+          </a>
+          <a href="https://www.instagram.com/" target="_blank" class="flex flex-col items-center hover:scale-110 transition-transform">
+            <div class="w-12 h-12 flex items-center justify-center">
+              <IconInstagram class="stroke-pink-500 w-8 h-8"/>
+            </div>
+            <span>Instagram</span>
+          </a>
+          <a href="https://www.twitter.com/" target="_blank" class="flex flex-col items-center hover:scale-110 transition-transform">
+            <div class="w-12 h-12 flex items-center justify-center">
+              <IconTwitter class="stroke-blue-400 w-8 h-8"/>
+            </div>
+            <span>Twitter</span>
+          </a>
+          <a href="https://www.youtube.com/" target="_blank" class="flex flex-col items-center hover:scale-110 transition-transform">
+            <div class="w-12 h-12 flex items-center justify-center">
+              <IconYoutube class="stroke-red-600 w-8 h-8"/>
+            </div>
+            <span>Youtube</span>
+          </a>
+          <a href="https://www.tiktok.com/" target="_blank" class="flex flex-col items-center hover:scale-110 transition-transform">
+            <div class="w-12 h-12 flex items-center justify-center">
+              <IconTiktok class="stroke-black text-c hover:stroke-pink-500 w-8 h-8"/>
+            </div>
+            <span>TikTok</span>
+          </a>
+        </div>
+      </div>
+    </Fragment>
+  </LayoutWithHero>
+  
